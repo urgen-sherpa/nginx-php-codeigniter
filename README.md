@@ -3,22 +3,25 @@ setup instruction for nginx-php-Codeigniter
 
 
 
-/etc/php5/fpm/pool.d/www.conf
+    vim  /etc/php5/fpm/pool.d/www.conf
+
+
 >>find below lines and set it like below "www-data" replaced by nginx
-listen.owner = nginx
-listen.group = nginx
+    
+    listen.owner = nginx
+    listen.group = nginx
 
-sudo nano /etc/php5/fpm/php.ini
+   sudo nano /etc/php5/fpm/php.ini
 
-cgi.fix_pathinfo=0
+    cgi.fix_pathinfo=0
 
->>This is an extremely insecure setting because it tells PHP to attempt to execute the closest file it can find if a PHP file does not match exactly. it is enabled"1" by default so set it to zero -> 0(zero)
+>> This is an extremely insecure setting because it tells PHP to attempt to execute the closest file it can find if a PHP file does not match exactly. it is enabled"1" by default so set it to zero -> 0(zero)
 
 
 sudo service php5-fpm restart
 vim /etc/nginx/nginx.conf
 
->>add below lines..
+>> add below lines..
 
 include /etc/nginx/sites-enabled/*.conf;
 include /etc/nginx/conf.d/*.conf;
@@ -26,16 +29,16 @@ include /etc/nginx/conf.d/*.conf;
 
 vim /etc/nginx/sites-enabled/default.conf
 
-server {
-listen 80 default_server;
-    listen [::]:80 default_server ipv6only=on;
+    server {
+        listen 80 default_server;
+        listen [::]:80 default_server ipv6only=on;
 
-    root /var/www/html/hottiehunter/public;
-    index index.php index.html index.htm;
+        root /var/www/html/hottiehunter/public;
+        index index.php index.html index.htm;
 
-    server_name example.com;
+        server_name example.com;
 
- location ~* \.(ico|css|js|gif|jpe?g|png)(\?[0-9]+)?$ {
+     location ~* \.(ico|css|js|gif|jpe?g|png)(\?[0-9]+)?$ {
                 expires max;
                 log_not_found off;
         }
